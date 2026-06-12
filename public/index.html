@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <title>LeetCode Mentor</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🧠</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/styles/github-dark.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Login gate -->
+  <div id="login-screen" class="login-screen hidden">
+    <form id="login-form" class="login-card">
+      <div class="login-logo">🧠</div>
+      <h1>LeetCode Mentor</h1>
+      <p class="login-sub">Enter the app password to continue.</p>
+      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required />
+      <button type="submit" id="login-btn">Sign in</button>
+      <p id="login-error" class="login-error hidden"></p>
+    </form>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="app hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <button id="new-chat-btn" class="btn-primary">＋ New problem</button>
+      </div>
+      <nav id="conversation-list" class="conversation-list"></nav>
+      <div class="sidebar-footer">
+        <button id="logout-btn" class="btn-ghost">Sign out</button>
+      </div>
+    </aside>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menu-btn" class="icon-btn menu-btn" title="Conversations">☰</button>
+        <div class="topbar-selects">
+          <label class="select-wrap" title="Mentor mode">
+            <span class="select-label">Mode</span>
+            <select id="mode-select">
+              <option value="socratic">Socratic mentor</option>
+              <option value="hints">Hint ladder</option>
+              <option value="solution">Full solution</option>
+            </select>
+          </label>
+          <label class="select-wrap" title="Model">
+            <span class="select-label">Model</span>
+            <select id="model-select"></select>
+          </label>
+        </div>
+        <span id="model-badge" class="model-badge" title="Active model"></span>
+      </header>
+
+      <div id="messages" class="messages">
+        <div id="empty-state" class="empty-state">
+          <div class="empty-emoji">🧠</div>
+          <h2>LeetCode Mentor</h2>
+          <p>Paste a problem statement to get started.</p>
+          <ul class="empty-tips">
+            <li><strong>Socratic mentor</strong> coaches with questions and never spoils the answer.</li>
+            <li><strong>Hint ladder</strong> gives one progressively stronger hint each time you ask.</li>
+            <li><strong>Full solution</strong> walks through the optimal approach, then quizzes you.</li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="composer">
+        <div class="composer-inner">
+          <textarea id="input" rows="1" placeholder="Paste a problem, your code, or your thinking… (Shift+Enter for newline)"></textarea>
+          <div class="composer-actions">
+            <button id="review-btn" class="btn-secondary" title="Paste your code above, then click to get a structured code review">Review my solution</button>
+            <button id="send-btn" class="btn-primary" title="Send (Enter)">Send</button>
+            <button id="stop-btn" class="btn-danger hidden" title="Stop generating">Stop</button>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.10.0/lib/common.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm install)",
+      "PowerShell($env:APP_PASSWORD = \"test123\"; $env:OPENAI_API_KEY = \"sk-test-dummy\"; $env:PORT = \"3777\"; node server.js)",
+      "PowerShell(Start-Sleep -Milliseconds 1500; $r1 = Invoke-WebRequest -Uri http://localhost:3777/healthz -UseBasicParsing; \"healthz: $\\($r1.StatusCode\\) $\\($r1.Content\\)\"; try { Invoke-WebRequest -Uri http://localhost:3777/api/config -UseBasicParsing -ErrorAction Stop } catch { \"config unauth: $\\($_.Exception.Response.StatusCode.value__\\)\" }; $login = Invoke-WebRequest -Uri http://localhost:3777/api/login -Method POST -ContentType 'application/json' -Body '{\"password\":\"test123\"}' -UseBasicParsing -SessionVariable sess; \"login: $\\($login.StatusCode\\) $\\($login.Content\\)\"; $cfg = Invoke-WebRequest -Uri http://localhost:3777/api/config -UseBasicParsing -WebSession $sess; \"config auth: $\\($cfg.StatusCode\\) $\\($cfg.Content\\)\")",
+      "PowerShell(try { Invoke-WebRequest -Uri http://localhost:3777/api/login -Method POST -ContentType 'application/json' -Body '{\"password\":\"wrong\"}' -UseBasicParsing -ErrorAction Stop } catch { \"wrong pw: $\\($_.Exception.Response.StatusCode.value__\\)\" }; $login = Invoke-WebRequest -Uri http://localhost:3777/api/login -Method POST -ContentType 'application/json' -Body '{\"password\":\"test123\"}' -UseBasicParsing -SessionVariable sess; $chat = Invoke-WebRequest -Uri http://localhost:3777/api/chat -Method POST -ContentType 'application/json' -Body '{\"messages\":[{\"role\":\"user\",\"content\":\"hi\"}],\"mode\":\"socratic\",\"model\":\"gpt-4o-mini\"}' -UseBasicParsing -WebSession $sess; \"chat: $\\($chat.StatusCode\\) | content-type: $\\($chat.Headers['Content-Type']\\) | body: $\\($chat.Content\\)\")",
+      "PowerShell($login = Invoke-WebRequest -Uri http://localhost:3777/api/login -Method POST -ContentType 'application/json' -Body '{\"password\":\"test123\"}' -UseBasicParsing -SessionVariable sess; $cookie = $login.Headers['Set-Cookie'].Split\\(';'\\)[0]; curl.exe -s -N --max-time 20 -X POST http://localhost:3777/api/chat -H \"Content-Type: application/json\" -H \"Cookie: $cookie\" -d '{\\\\\"messages\\\\\":[{\\\\\"role\\\\\":\\\\\"user\\\\\",\\\\\"content\\\\\":\\\\\"hi\\\\\"}],\\\\\"mode\\\\\":\\\\\"socratic\\\\\",\\\\\"model\\\\\":\\\\\"gpt-4o-mini\\\\\"}')",
+      "Bash(curl -s -D - -o /dev/null -X POST http://localhost:3777/api/login -H \"Content-Type: application/json\" -d '{\"password\":\"test123\"}')",
+      "Bash(node -e ' *)",
+      "PowerShell(Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowTitle -eq '' } | Out-Null; \"ok\")",
+      "Bash(node --check public/app.js)",
+      "Bash(node --check server.js)",
+      "Bash(curl -s -o /dev/null -w \"GET / -> %{http_code}, %{size_download} bytes\\\\n\" http://localhost:3777/)",
+      "Bash(curl -s -o /dev/null -w \"GET /styles.css -> %{http_code}\\\\n\" http://localhost:3777/styles.css)",
+      "Bash(curl -s -o /dev/null -w \"GET /app.js -> %{http_code}\\\\n\" http://localhost:3777/app.js)"
+    ]
+  }
+}
